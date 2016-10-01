@@ -11,7 +11,7 @@ import {
   connectionFromArray,
   connectionArgs,
   connectionDefinitions,
-} from 'graphql-relay';
+} from './graphql-relay';
 
 import {
   getObjectFromUrl
@@ -20,12 +20,12 @@ import {
 import {
   GraphQLInt,
   GraphQLList
-} from 'graphql';
+} from 'graphql-rxjs';
 
-import type {
-  GraphQLOutputType,
+import {
+  GraphQLObjectType,
   GraphQLFieldConfig
-} from 'graphql';
+} from 'graphql-rxjs';
 
 /**
  * Constructs a GraphQL connection field config; it is assumed
@@ -35,7 +35,7 @@ import type {
 export function connectionFromUrls(
   name: string,
   prop: string,
-  type: GraphQLOutputType
+  type: GraphQLObjectType
 ): GraphQLFieldConfig {
   var {connectionType} = connectionDefinitions({
     name: name,
@@ -69,10 +69,7 @@ full "{ edges { node } }" version should be used instead.`
     args: connectionArgs,
     resolve: (obj, args) => {
       var array = obj[prop] || [];
-      return {
-        ...connectionFromArray(array, args),
-        totalCount: array.length
-      };
+      return (<any>Object).assign({totalCount: array.length}, connectionFromArray(array, args));
     },
   };
 }

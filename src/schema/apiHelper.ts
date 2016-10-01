@@ -7,13 +7,13 @@
  * LICENSE-examples file in the root directory of this source tree.
  */
 
-import DataLoader from 'dataloader';
+import * as DataLoader from 'dataloader';
 
 import {
   getFromLocalUrl
 } from '../api';
 
-var localUrlLoader = new DataLoader(
+var localUrlLoader = new (<any>DataLoader)(
   urls => Promise.all(urls.map(getFromLocalUrl))
 );
 
@@ -21,7 +21,7 @@ var localUrlLoader = new DataLoader(
  * Objects returned from SWAPI don't have an ID field, so add one.
  */
 function objectWithId(obj: Object): Object {
-  obj.id = obj.url.split('/')[5];
+  (<any>obj).id = (<any>obj).url.split('/')[5];
   return obj;
 }
 
@@ -48,11 +48,11 @@ export async function getObjectFromTypeAndId(
  * Quick helper method, if the user just passes `first`, we can stop
  * fetching once we have that many items.
  */
-function doneFetching(objects: Array<Object>, args?: ?Object): boolean {
-  if (!args || args.after || args.before || args.last || !args.first) {
+function doneFetching(objects: Array<Object>, args?: { [key: string] : any }): boolean {
+  if (!args || args['after'] || args['before'] || args['last'] || args['first']) {
     return false;
   }
-  return objects.length >= args.first;
+  return objects.length >= args['first'];
 }
 
 type ObjectsByType = {
@@ -65,7 +65,7 @@ type ObjectsByType = {
  */
 export async function getObjectsByType(
   type: string,
-  args?: ?Object
+  args?: Object
 ): Promise<ObjectsByType> {
   var objects = [];
   var totalCount = 0;

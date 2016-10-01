@@ -9,25 +9,25 @@
 
 import { getObjectFromTypeAndId } from './apiHelper';
 
-import type {
+import {
   GraphQLObjectType
-} from 'graphql';
+} from 'graphql-rxjs';
 
 import {
   nodeDefinitions,
   fromGlobalId,
-} from 'graphql-relay';
+} from './graphql-relay';
 
 /**
  * Given a "type" in SWAPI, returns the corresponding GraphQL type.
  */
 export function swapiTypeToGraphQLType(swapiType: string): GraphQLObjectType {
-  var FilmType = require('./types/film');
-  var PersonType = require('./types/person');
-  var PlanetType = require('./types/planet');
-  var SpeciesType = require('./types/species');
-  var StarshipType = require('./types/starship');
-  var VehicleType = require('./types/vehicle');
+  var FilmType = require('./types/film').default;
+  var PersonType = require('./types/person').default;
+  var PlanetType = require('./types/planet').default;
+  var SpeciesType = require('./types/species').default;
+  var StarshipType = require('./types/starship').default;
+  var VehicleType = require('./types/vehicle').default;
 
   switch (swapiType) {
     case 'films':

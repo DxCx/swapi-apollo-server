@@ -20,7 +20,7 @@ import {
   connectionFromArray,
   connectionArgs,
   connectionDefinitions,
-} from 'graphql-relay';
+} from './graphql-relay';
 
 import {
   getObjectsByType,
@@ -39,9 +39,15 @@ import {
  */
 function rootFieldByID(idName, swapiType) {
   var getter = (id) => getObjectFromTypeAndId(swapiType, id);
-  var argDefs = {};
-  argDefs.id = { type: GraphQLID };
-  argDefs[idName] = { type: GraphQLID };
+  var argDefs = {
+      id: {
+          type: GraphQLID,
+      },
+      [idName]: {
+          type: GraphQLID,
+      }
+  };
+
   return {
     type: swapiTypeToGraphQLType(swapiType),
     args: argDefs,
@@ -101,10 +107,7 @@ full "{ edges { node } }" version should be used instead.`
     args: connectionArgs,
     resolve: async (_, args) => {
       var {objects, totalCount} = await getObjectsByType(swapiType, args);
-      return {
-        ...connectionFromArray(objects, args),
-        totalCount: totalCount
-      };
+      return (<any> Object).assign({totalCount: totalCount}, connectionFromArray(objects, args));
     }
   };
 }

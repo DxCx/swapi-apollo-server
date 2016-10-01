@@ -9,7 +9,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import swapiSchema from '../';
-import { graphql } from 'graphql';
+import { graphql } from 'graphql-rxjs';
 
 // 80+ char lines are useful in describe/it, so ignore in this file.
 // Some chai expects appear as unused expressions

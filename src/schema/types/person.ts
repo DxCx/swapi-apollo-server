@@ -11,11 +11,11 @@ import {
   GraphQLInt,
   GraphQLObjectType,
   GraphQLString,
-} from 'graphql';
+} from 'graphql-rxjs';
 
 import {
   globalIdField
-} from 'graphql-relay';
+} from '../graphql-relay';
 
 import { nodeInterface } from '../relayNode';
 import { createdField, editedField } from '../commonFields';

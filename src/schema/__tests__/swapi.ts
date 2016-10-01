@@ -7,7 +7,7 @@
  */
 
 import swapiSchema from '../';
-import { graphql } from 'graphql';
+import { graphql } from 'graphql-rxjs';
 
 export async function swapi(query) {
   var result = await graphql(swapiSchema, query);
