@@ -20,7 +20,7 @@ var webpack_opts = {
 		libraryTarget: "commonjs2"
 	},
 	resolve: {
-		extensions: ['', '.ts', '.js'],
+		extensions: ['.ts', '.js'],
 		modules: [
 			'node_modules',
 			'src',
@@ -32,14 +32,6 @@ var webpack_opts = {
 		loaders: [{ test: /\.ts$/, loaders: ['awesome-typescript-loader'] }]
 	},
 	externals: [nodeExternals()],
-	tslint: {
-		emitErrors: true,
-		failOnHint: true
-	},
-	ts: {
-		compiler: 'typescript',
-		configFileName: 'tsconfig.json'
-	}
 }
 
 module.exports = webpack_opts;

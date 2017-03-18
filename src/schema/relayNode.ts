@@ -11,7 +11,7 @@ import { getObjectFromTypeAndId } from './apiHelper';
 
 import {
   GraphQLObjectType
-} from 'graphql-rxjs';
+} from 'graphql';
 
 import {
   nodeDefinitions,

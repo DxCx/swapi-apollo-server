@@ -12,7 +12,7 @@ import {
   GraphQLList,
   GraphQLObjectType,
   GraphQLString,
-} from 'graphql-rxjs';
+} from 'graphql';
 
 import {
   globalIdField

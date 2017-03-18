@@ -13,7 +13,7 @@ import {
   GraphQLList,
   GraphQLObjectType,
   GraphQLSchema,
-} from 'graphql-rxjs';
+} from 'graphql';
 
 import {
   fromGlobalId,

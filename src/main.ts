@@ -1,8 +1,9 @@
 import * as express from "express";
-import { wsApollo, graphiqlExpress } from "apollo-server-rxjs";
+import { graphqlWs } from "graphql-server-ws";
+import { graphiqlExpress } from "graphql-server-express";
 import * as helmet from "helmet";
 import * as morgan from "morgan";
-import { GraphQLSchema } from "graphql-rxjs";
+import * as graphqlRxJs from "graphql-rxjs";
 import Schema from "./schema"
 
 import * as url from "url";
@@ -58,7 +59,7 @@ export function main(options: IMainOptions) {
     }).then((server) => {
         let wss = new WsServer({ server: <any> server });
 
-        wss.on("connection", wsApollo((ws) => {
+        wss.on("connection", graphqlWs((ws) => {
             const location = url.parse(ws.upgradeReq.url, true);
 
             // Multiplex ws connections by path.
@@ -67,6 +68,7 @@ export function main(options: IMainOptions) {
                    return {
                        context: {},
                        schema: Schema,
+                       executor: graphqlRxJs,
                    };
                default:
                    ws.terminate();

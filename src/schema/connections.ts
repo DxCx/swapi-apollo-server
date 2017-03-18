@@ -20,12 +20,12 @@ import {
 import {
   GraphQLInt,
   GraphQLList
-} from 'graphql-rxjs';
+} from 'graphql';
 
 import {
   GraphQLObjectType,
   GraphQLFieldConfig
-} from 'graphql-rxjs';
+} from 'graphql';
 
 /**
  * Constructs a GraphQL connection field config; it is assumed
@@ -36,7 +36,7 @@ export function connectionFromUrls(
   name: string,
   prop: string,
   type: GraphQLObjectType
-): GraphQLFieldConfig {
+): GraphQLFieldConfig<any, any> {
   var {connectionType} = connectionDefinitions({
     name: name,
     nodeType: type,

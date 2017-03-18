@@ -7,7 +7,7 @@
  * LICENSE-examples file in the root directory of this source tree.
  */
 
-import { GraphQLString } from 'graphql-rxjs';
+import { GraphQLString } from 'graphql';
 
 // These two fields appear on all types, so let's only write them once.
 export function createdField(): any {

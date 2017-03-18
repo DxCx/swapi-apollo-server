@@ -12,7 +12,7 @@ import {
     GraphQLID,
     GraphQLInterfaceType,
     GraphQLInterfaceTypeConfig,
-} from 'graphql-rxjs';
+} from 'graphql';
 
 export type Base64String = string;
 
@@ -260,8 +260,8 @@ export type ConnectionConfig = {
   nodeType: GraphQLObjectType,
   resolveNode?: Function,
   resolveCursor?: Function,
-  edgeFields?: (() => GraphQLFieldConfigMap) | GraphQLFieldConfigMap,
-  connectionFields?: (() => GraphQLFieldConfigMap) | GraphQLFieldConfigMap,
+  edgeFields?: (() => GraphQLFieldConfigMap<any, any>) | GraphQLFieldConfigMap<any, any>,
+  connectionFields?: (() => GraphQLFieldConfigMap<any, any>) | GraphQLFieldConfigMap<any, any>,
 }
 
 /**
@@ -360,7 +360,7 @@ export function toGlobalId(type: string, id: string): string {
 export function globalIdField(
   typeName?: string,
   idFetcher?: (object: any, info: GraphQLResolveInfo) => string
-): GraphQLFieldConfig {
+): GraphQLFieldConfig<any, any> {
   return {
 //    name: 'id',
     description: 'The ID of an object',
@@ -374,7 +374,7 @@ export function globalIdField(
 
 export type GraphQLNodeDefinitions = {
   nodeInterface: GraphQLInterfaceType,
-  nodeField: GraphQLFieldConfig
+  nodeField: GraphQLFieldConfig<any, any>
 }
 
 type typeResolverFn = (object: any) => (GraphQLObjectType | Promise<GraphQLObjectType>);
@@ -393,7 +393,7 @@ export function nodeDefinitions(
   idFetcher: ((id: string, info: GraphQLResolveInfo) => any),
   typeResolver?: typeResolverFn
 ): GraphQLNodeDefinitions {
-  var nodeInterface = new GraphQLInterfaceType(<GraphQLInterfaceTypeConfig> {
+  var nodeInterface = new GraphQLInterfaceType(<GraphQLInterfaceTypeConfig<any, any>> {
     name: 'Node',
     description: 'An object with an ID',
     fields: () => ({

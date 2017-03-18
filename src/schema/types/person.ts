@@ -11,7 +11,7 @@ import {
   GraphQLInt,
   GraphQLObjectType,
   GraphQLString,
-} from 'graphql-rxjs';
+} from 'graphql';
 
 import {
   globalIdField
