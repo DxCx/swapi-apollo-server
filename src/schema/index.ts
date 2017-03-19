@@ -32,6 +32,8 @@ import {
   nodeField,
 } from './relayNode';
 
+import { Observable } from 'rxjs';
+
 /**
  * Creates a root field to get an object of a given type.
  * Accepts either `id`, the globally unique ID used in GraphQL,
@@ -134,4 +136,21 @@ var rootType = new GraphQLObjectType({
   }),
 });
 
-export default new GraphQLSchema({ query: rootType });
+var subscriptionType = new GraphQLObjectType({
+  name: 'Subscription',
+  fields: {
+    raisingCount: {
+      type: GraphQLInt,
+      args: {
+        delay: {
+          type: GraphQLInt
+        },
+      },
+      resolve: (root, args, ctx) => {
+        return Observable.interval(args.delay || 5);
+      },
+    },
+  },
+});
+
+export default new GraphQLSchema({ query: rootType, subscription: subscriptionType });
