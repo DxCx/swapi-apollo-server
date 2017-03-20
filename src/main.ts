@@ -1,9 +1,10 @@
 import * as express from "express";
 import { graphqlWs } from "graphql-server-ws";
-import { graphiqlExpress } from "graphql-server-express";
+import { graphqlExpress, graphiqlExpress } from "graphql-server-express";
 import * as helmet from "helmet";
 import * as morgan from "morgan";
 import * as graphqlRxJs from "graphql-rxjs";
+import * as bodyParser from "body-parser";
 import Schema from "./schema"
 
 import * as url from "url";
@@ -33,14 +34,17 @@ export function main(options: IMainOptions) {
     app.use(helmet());
     app.use(morgan(options.env));
 
-    app.use(GRAPHQL_ROUTE, (req, res) => {
-        res.writeHead(400);
-        res.write("this is websocket endpoint");
-        res.end();
-    });
+    app.use(GRAPHQL_ROUTE, bodyParser.json(), graphqlExpress({
+      schema: Schema,
+      context: {},
+    }));
 
     if ( true === options.enableGraphiql ) {
         app.use(GRAPHIQL_ROUTE, graphiqlExpress({
+            endpointURL: GRAPHQL_ROUTE,
+        }));
+
+        app.use(`${GRAPHIQL_ROUTE}-ws`, graphiqlExpress({
             endpointURL: `ws://localhost:${options.port}${GRAPHQL_ROUTE}`,
         }));
     }
